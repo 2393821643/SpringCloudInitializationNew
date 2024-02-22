@@ -1,0 +1,41 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: consumer-server
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: ${mata.nacos.server-addr}
+      config:
+        username: ${mata.nacos.username}
+        password: ${mata.nacos.password}
+      discovery:
+        username: ${mata.nacos.username}
+        password: ${mata.nacos.password}
+    sentinel:
+      web-context-unify: false
+      transport:
+        dashboard: ${mata.sentinel.dashboard}
+        clientIp: ${mata.sentinel.clientIp}
+
+seata:
+  registry:
+    type: nacos
+    nacos:
+      server-addr: ${mata.nacos.server-addr}
+      namespace: ""
+      group: SEATA_GROUP # 分组名称
+      application: seata-server # tc服务在nacos中的服务名称
+      username: nacos
+      password: nacos
+  tx-service-group: test-seata-group
+  service:
+    vgroup-mapping: # 事务组与cluster的映射关系
+      test-seata-group: default
+  data-source-proxy-mode: XA # 其他模式需要其他配置
+
+
+
